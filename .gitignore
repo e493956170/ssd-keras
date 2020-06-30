@@ -2,3 +2,4 @@ __pycache__
 VOCdevkit/VOC2007
 model_data/voc_2007_ssd_weights.h5
 model_data/ssd_weights.h5
+log

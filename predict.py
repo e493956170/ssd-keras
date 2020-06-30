@@ -1,13 +1,10 @@
 from ssd import SSD
 from PIL import Image
-import numpy as np
-ssd = SSD()
-
 import cv2
+import numpy as np
 
 
-
-
+ssd = SSD()
 
 # img = 'img/test.jpg'
 # try:
@@ -23,9 +20,7 @@ import cv2
 cap = cv2.VideoCapture(0)
 while True:
     ret ,frame = cap.read()
-    # img = input('Input image filename:')
     try:
-        # image = Image.open(img)
         image = frame
     except:
         print('Open Error! Try again!')
