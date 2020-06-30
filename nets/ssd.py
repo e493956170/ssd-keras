@@ -1,16 +1,16 @@
-import keras.backend as K
-from keras.layers import Activation
+import tensorflow.keras.backend as K
+from tensorflow.keras.layers import Activation
 #from keras.layers import AtrousConvolution2D
-from keras.layers import Conv2D
-from keras.layers import Dense
-from keras.layers import Flatten
-from keras.layers import GlobalAveragePooling2D
-from keras.layers import Input
-from keras.layers import MaxPooling2D
-from keras.layers import merge, concatenate
-from keras.layers import Reshape
-from keras.layers import ZeroPadding2D
-from keras.models import Model
+from tensorflow.keras.layers import Conv2D
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Flatten
+from tensorflow.keras.layers import GlobalAveragePooling2D
+from tensorflow.keras.layers import Input
+from tensorflow.keras.layers import MaxPooling2D
+from tensorflow.keras.layers import concatenate
+from tensorflow.keras.layers import Reshape
+from tensorflow.keras.layers import ZeroPadding2D
+from tensorflow.keras.models import Model
 from nets.VGG16 import VGG16
 from nets.ssd_layers import Normalize
 from nets.ssd_layers import PriorBox
@@ -146,10 +146,10 @@ def SSD300(input_shape, num_classes=21):
                                   net['conv9_2_mbox_priorbox']],
                                   axis=1, name='mbox_priorbox')
 
-    if hasattr(net['mbox_loc'], '_keras_shape'):
-        num_boxes = net['mbox_loc']._keras_shape[-1] // 4
-    elif hasattr(net['mbox_loc'], 'int_shape'):
-        num_boxes = K.int_shape(net['mbox_loc'])[-1] // 4
+    # if hasattr(net['mbox_loc'], '_keras_shape'):
+    #     num_boxes = net['mbox_loc']._keras_shape[-1] // 4
+    # elif hasattr(net['mbox_loc'], 'int_shape'):
+    num_boxes = K.int_shape(net['mbox_loc'])[-1] // 4
     # 8732,4
     net['mbox_loc'] = Reshape((num_boxes, 4),name='mbox_loc_final')(net['mbox_loc'])
     # 8732,21

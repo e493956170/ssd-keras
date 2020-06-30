@@ -1,15 +1,15 @@
-import keras.backend as K
-from keras.layers import Activation
-from keras.layers import Conv2D
-from keras.layers import Dense
-from keras.layers import Flatten
-from keras.layers import GlobalAveragePooling2D
-from keras.layers import Input
-from keras.layers import MaxPooling2D
-from keras.layers import merge, concatenate
-from keras.layers import Reshape
-from keras.layers import ZeroPadding2D
-from keras.models import Model
+import tensorflow.keras.backend as K
+from tensorflow.keras.layers import Activation
+from tensorflow.keras.layers import Conv2D
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Flatten
+from tensorflow.keras.layers import GlobalAveragePooling2D
+from tensorflow.keras.layers import Input
+from tensorflow.keras.layers import MaxPooling2D
+from tensorflow.keras.layers import concatenate
+from tensorflow.keras.layers import Reshape
+from tensorflow.keras.layers import ZeroPadding2D
+from tensorflow.keras.models import Model
 
 def VGG16(input_tensor):
     #----------------------------主干特征提取网络开始---------------------------#

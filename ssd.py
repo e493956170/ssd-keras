@@ -1,11 +1,12 @@
 import cv2
-import keras
+from tensorflow import keras
+import tensorflow as tf
 import numpy as np
 import colorsys
 import os
 from nets import ssd
-from keras import backend as K
-from keras.applications.imagenet_utils import preprocess_input
+from tensorflow.keras import backend as K
+from tensorflow.keras.applications.imagenet_utils import preprocess_input
 from utils.utils import BBoxUtility,letterbox_image,ssd_correct_boxes
 from PIL import Image,ImageFont, ImageDraw
 
@@ -15,7 +16,7 @@ from PIL import Image,ImageFont, ImageDraw
 #--------------------------------------------#
 class SSD(object):
     _defaults = {
-        "model_path": 'model_data/ssd_weights.h5',
+        "model_path": 'model_data/voc_2007_ssd_weights.h5',
         "classes_path": 'model_data/voc_classes.txt',
         "model_image_size" : (300, 300, 3),
         "confidence": 0.5,
@@ -34,7 +35,7 @@ class SSD(object):
     def __init__(self, **kwargs):
         self.__dict__.update(self._defaults)
         self.class_names = self._get_class()
-        self.sess = K.get_session()
+        self.sess = tf.compat.v1.keras.backend.get_session
         self.generate()
         self.bbox_util = BBoxUtility(self.num_classes)
     #---------------------------------------------------#
@@ -77,6 +78,9 @@ class SSD(object):
     #   检测图片
     #---------------------------------------------------#
     def detect_image(self, image):
+        if type(image) is  np.ndarray:
+            image = Image.fromarray(cv2.cvtColor(image,cv2.COLOR_BGR2RGB)) 
+            
         image_shape = np.array(np.shape(image)[0:2])
         crop_img,x_offset,y_offset = letterbox_image(image, (self.model_image_size[0],self.model_image_size[1]))
         photo = np.array(crop_img,dtype = np.float64)

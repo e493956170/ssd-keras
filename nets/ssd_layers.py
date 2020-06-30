@@ -1,15 +1,15 @@
-import keras.backend as K
-from keras.engine.topology import InputSpec
-from keras.engine.topology import Layer
+import tensorflow.keras.backend as K
+from tensorflow.keras.layers import InputSpec
+from tensorflow.keras.layers import Layer
 import numpy as np
 import tensorflow as tf
 
 class Normalize(Layer):
     def __init__(self, scale, **kwargs):
-        if K.image_dim_ordering() == 'tf':
-            self.axis = 3
-        else:
-            self.axis = 1
+        # if K.image_dim_ordering() == 'tf':
+        self.axis = 3
+        # else:
+            # self.axis = 1
         self.scale = scale
         super(Normalize, self).__init__(**kwargs)
 
@@ -18,7 +18,7 @@ class Normalize(Layer):
         shape = (input_shape[self.axis],)
         init_gamma = self.scale * np.ones(shape)
         self.gamma = K.variable(init_gamma, name='{}_gamma'.format(self.name))
-        self.trainable_weights = [self.gamma]
+        # self.trainable_weights = [self.gamma]
 
     def call(self, x, mask=None):
         output = K.l2_normalize(x, self.axis)
@@ -30,12 +30,12 @@ class PriorBox(Layer):
     def __init__(self, img_size, min_size, max_size=None, aspect_ratios=None,
                  flip=True, variances=[0.1], clip=True, **kwargs):
 
-        if K.image_dim_ordering() == 'tf':
-            self.waxis = 2
-            self.haxis = 1
-        else:
-            self.waxis = 3
-            self.haxis = 2
+        # if K.image_dim_ordering() == 'tf':
+        self.waxis = 2
+        self.haxis = 1
+        # else:
+        #     self.waxis = 3
+        #     self.haxis = 2
 
         self.img_size = img_size
         if min_size <= 0:

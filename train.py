@@ -1,17 +1,17 @@
-from keras.backend.tensorflow_backend import set_session
-from keras.callbacks import TensorBoard, ModelCheckpoint, ReduceLROnPlateau, EarlyStopping
-from keras.models import Model
-from keras.preprocessing import image
+# from keras.backend.tensorflow_backend import set_session
+from tensorflow.keras.callbacks import TensorBoard, ModelCheckpoint, ReduceLROnPlateau, EarlyStopping
+# from keras.models import Model
+# from keras.preprocessing import image
 from nets.ssd import SSD300
 from nets.ssd_training import MultiboxLoss,Generator
 from utils.utils import BBoxUtility
-from keras.optimizers import Adam
+from tensorflow.keras.optimizers import Adam
 import matplotlib.pyplot as plt
 import numpy as np
 import pickle
 import tensorflow as tf
 import cv2
-import keras
+import tensorflow.keras as keras
 import os
 import sys
 if __name__ == "__main__":
@@ -82,3 +82,4 @@ if __name__ == "__main__":
                 epochs=50, 
                 initial_epoch=30,
                 callbacks=[logging, checkpoint, reduce_lr, early_stopping])
+model.save_weights('model_data/voc_2007_ssd_weights.h5')

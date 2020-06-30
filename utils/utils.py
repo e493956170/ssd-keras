@@ -1,8 +1,9 @@
 import numpy as np
 import tensorflow as tf
 from PIL import Image
-
+import cv2
 def letterbox_image(image, size):
+
     iw, ih = image.size
     w, h = size
     scale = min(w/iw, h/ih)
@@ -10,6 +11,8 @@ def letterbox_image(image, size):
     nh = int(ih*scale)
 
     image = image.resize((nw,nh), Image.BICUBIC)
+
+            
     new_image = Image.new('RGB', size, (128,128,128))
     new_image.paste(image, ((w-nw)//2, (h-nh)//2))
     x_offset,y_offset = (w-nw)//2/300, (h-nh)//2/300
@@ -38,7 +41,7 @@ def ssd_correct_boxes(top, left, bottom, right, input_shape, image_shape):
     print(np.shape(boxes))
     boxes *= np.concatenate([image_shape, image_shape],axis=-1)
     return boxes
-
+tf.compat.v1.disable_eager_execution()
 class BBoxUtility(object):
     def __init__(self, num_classes, priors=None, overlap_threshold=0.5,
                  nms_thresh=0.45, top_k=400):
@@ -48,12 +51,12 @@ class BBoxUtility(object):
         self.overlap_threshold = overlap_threshold
         self._nms_thresh = nms_thresh
         self._top_k = top_k
-        self.boxes = tf.placeholder(dtype='float32', shape=(None, 4))
-        self.scores = tf.placeholder(dtype='float32', shape=(None,))
+        self.boxes = tf.compat.v1.placeholder(dtype='float32', shape=(None, 4))
+        self.scores = tf.compat.v1.placeholder(dtype='float32', shape=(None,))
         self.nms = tf.image.non_max_suppression(self.boxes, self.scores,
                                                 self._top_k,
                                                 iou_threshold=self._nms_thresh)
-        self.sess = tf.Session(config=tf.ConfigProto(device_count={'GPU': 0}))
+        self.sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(device_count={'GPU': 0}))
 
     @property
     def nms_thresh(self):
