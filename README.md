@@ -1,3 +1,12 @@
+## SSD:在Tensorflow2 中的实现
+
+沿用了原版的实现基础，采用了tf2中的兼容框架，在tensorflow2环境下实现了SSD+VGG16。
+
+
+后续将添加MobileNetV2框架。
+
+
+
 ## SSD: Single-Shot MultiBox Detector目标检测模型在Keras当中的实现
 ---
 
@@ -8,8 +17,8 @@
 4. [参考资料 Reference](#Reference)
 
 ### 所需环境
-tensorflow-gpu==1.13.1  
-keras==2.1.5  
+tensorflow2==2.2.0  
+python>=3.7
 
 ### 文件下载
 训练所需的ssd_weights.h5可以在百度云下载。  
